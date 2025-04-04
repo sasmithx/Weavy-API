@@ -33,4 +33,51 @@ public class UserController {
     }
 
 
+    @GetMapping("/{id}")
+    public ResponseEntity<String> getUserDetails(@PathVariable("id") String id) {
+        try {
+            String response = userService.getUserDetails(id);
+            return ResponseEntity.ok(response);
+        } catch (IOException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Cause retrieving user details: " + e.getMessage());
+        }
+    }
+
+
+    @PutMapping("/{id}")
+    public ResponseEntity<String> updateUser(@PathVariable("id") String id, @RequestBody String jsonPayload) {
+        try {
+            String response = userService.updateUser(id, jsonPayload);
+            return ResponseEntity.ok(response);
+        } catch (IOException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Cause updating user: " + e.getMessage());
+        }
+    }
+
+
+    @GetMapping()
+    public ResponseEntity<String> listUsers(@RequestParam("take") int take) {
+        try {
+            String response = userService.listUsers(take);
+            return ResponseEntity.ok(response);
+        } catch (IOException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Cause listing users: " + e.getMessage());
+        }
+    }
+
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteUser(@PathVariable("id") String id) {
+        try {
+            String response = userService.deleteUser(id);
+            return ResponseEntity.ok(response);
+        } catch (IOException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Cause deleting user: " + e.getMessage());
+        }
+    }
+
 }
