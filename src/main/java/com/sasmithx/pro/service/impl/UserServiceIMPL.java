@@ -80,6 +80,14 @@ public class UserServiceIMPL implements UserService {
 
     @Override
     public String deleteUser(String userId) throws IOException {
-        return "";
+        Request request = new Request.Builder()
+                .url(baseUrl + "/" + userId + "/trash")
+                .post(RequestBody.create(new byte[0], null))
+                .addHeader("Authorization", "Bearer " + apiToken)
+                .build();
+
+        try (Response response = httpClient.newCall(request).execute()) {
+            return response.body().string();
+        }
     }
 }
